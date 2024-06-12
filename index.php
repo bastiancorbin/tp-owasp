@@ -22,13 +22,14 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
               integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
               crossorigin="anonymous">
+        <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfsJfcpAAAAAGZe3MJIa9LFAEu9rZ07pVc20X87"></script>
     </head>
 </head>
 <body>
 <div class="container">
     <?php if(!$user): ?>
     <h1>Connexion</h1>
-    <form action="/tp-owasp/" method="POST">
+    <form action="/tp-owasp/" method="POST" id="demo-form">
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -42,7 +43,10 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             <label for="stayConnected">Rester connecté</label>
             <input name="stayConnected" type="checkbox" id="stayConnected">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button class="g-recaptcha"
+            data-sitekey="6LfsJfcpAAAAAGZe3MJIa9LFAEu9rZ07pVc20X87"
+            data-callback='onSubmit'
+            data-action='submit'>Submit</button>
     </form>
     <a href="register.php">Je m'inscrit</a>
     <?php else: ?>
@@ -52,4 +56,10 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     <?php endif ?>
 </div>
 </body>
+
+<script>
+  function onSubmit(token) {
+    document.getElementById("demo-form").submit();
+  }
+</script>
 </html>
