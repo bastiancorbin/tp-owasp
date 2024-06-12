@@ -44,6 +44,7 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
             <div class="invalid-feedback">
                 S'il vous plaît entrez un mot de passe.
             </div>
+            <div class="progress-bar rounded" id="progress"></div>
         </div>
         <div class="form-group">
             <label for="password-confirm">Confirmez le mot de passe :</label>
@@ -54,12 +55,31 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
         </div>
         <button type="submit" class="btn btn-primary">S'inscrire</button>
     </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
     <script>
+        const ratings = ["Mot de passe très faible", "Mot de passe faible", "Mot de passe moyen", "Mot de passe fort", "Mot de passe très fort"];
+        const progressClasses = ['bg-danger', 'bg-warning', 'bg-warning', 'bg-success', 'bg-success'];
+
         var password = document.getElementById("password");
+        var progress_bar = document.getElementById("progress");
         var confirm_password = document.getElementById("password-confirm");
 
-        function validatePassword(){
-            console.log('here');
+        function validatePassword() {
+            const result = zxcvbn(password.value);
+
+            if (password.value) {
+                const score = result.score;
+                const scorePercentage = (score + 1) * 20;
+                progress.style.width = scorePercentage + '%';
+
+                progress.className = progressClasses[score];
+                progress.textContent = ratings[score];
+            } else {
+                progress.style.width = 0 + '%';
+                progress.className = '';
+                progress.textContent = '';
+            }
+
             if(password.value != confirm_password.value) {
                 confirm_password.setCustomValidity("Les mots de passe ne correspondent pas");
                 return false;
@@ -69,7 +89,7 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
             }
         }
 
-        password.onchange = validatePassword;
+        password.oninput = validatePassword;
         confirm_password.onkeyup = validatePassword;
 
         // Example starter JavaScript for disabling form submissions if there are invalid fields
