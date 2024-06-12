@@ -10,19 +10,19 @@ if(isset($_GET['id'])) {
 ?>
 
 <?php if($user): ?>
-<h1>Information de l'utilisateur <?= $user->email ?></h1>
+<h1>Information de l'utilisateur <?= htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8') ?></h1>
 <table>
     <tr>
         <td>id</td>
-        <td><?= $user->id ?></td>
+        <td><?= htmlspecialchars($user->id, ENT_QUOTES, 'UTF-8') ?></td>
     </tr>
     <tr>
         <td>username</td>
-        <td><?= $user->username ?></td>
+        <td><?= htmlspecialchars($user->username, ENT_QUOTES, 'UTF-8') ?></td>
     </tr>
     <tr>
         <td>email</td>
-        <td><?= $user->email ?></td>
+        <td><?= htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8') ?></td>
     </tr>
 </table>
 <?php else: ?>
