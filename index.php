@@ -3,9 +3,9 @@ require_once('functions.php');
 session_start();
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 if (isset($_POST['email']) && isset($_POST['password'])) {
-    $users = logUser($_POST['email'], $_POST['password']);
-    if(!empty($users)) {
-        $user = $users[0];
+    $userDb = logUser($_POST['email'], $_POST['password']);
+    if($userDb) {
+        $user = $userDb;
         $_SESSION['user'] = $user;
     }
 }

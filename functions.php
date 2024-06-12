@@ -16,11 +16,17 @@ function connectDb()
 function logUser($email, $password)
 {
     $connexion = connectDb();
-    $sql = 'SELECT * FROM users WHERE email = :email AND password = :password';
+    $sql = 'SELECT * FROM users WHERE email = :email';
     $stmt = $connexion->prepare($sql);
-    $stmt->execute(['email' => $email, 'password' => $password]);
+    $stmt->execute(['email' => $email]);
 
-    return $stmt->fetchAll(PDO::FETCH_OBJ);
+    $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+    if ($user && password_verify($password, $user->password)) {
+        return $user;
+    } else {
+        return false;
+    }
 }
 
 function getUser($id) {
@@ -37,5 +43,5 @@ function saveUser($username, $email, $password) {
     $sql = 'INSERT INTO users(username, email, password) VALUES(:username, :email, :password)';
     $stmt = $connexion->prepare($sql);
 
-    return $stmt->execute(['username' => $username, 'email' => $email, 'password' => $password]);
+    return $stmt->execute(['username' => $username, 'email' => $email, 'password' => password_hash($password, PASSWORD_BCRYPT)]);
 }
