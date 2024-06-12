@@ -47,7 +47,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             data-sitekey="6LfsJfcpAAAAAGZe3MJIa9LFAEu9rZ07pVc20X87"
             data-callback='onSubmit'
             data-action='submit'>Submit</button>
-    </form>
+
+        <a href="https://accounts.google.com/o/oauth2/v2/auth?scope=email&response_type=code&access_type=online&redirect_uri=<?= urlencode('http://localhost/tp-owasp/index.php') ?>&client_id=941091354895-4g48le879ki76ktahcdmv8cnu05cjm3q.apps.googleusercontent.com">Google</form>
     <a href="register.php">Je m'inscrit</a>
     <?php else: ?>
         <h1>Bienvenue <?= htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8') ?></h1>
