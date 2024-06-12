@@ -1,7 +1,11 @@
 <?php
 require_once('functions.php');
 $user = null;
-if(isset($_GET['id'])) {
+
+session_start();
+$userSession = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+
+if(isset($_GET['id']) && isset($userSession) && $userSession->id == $_GET['id']) {
     $users = getUser($_GET['id']);
     if(!empty($users)) {
         $user = $users[0];
